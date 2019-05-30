@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link href="{% static 'login/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+    <div class="container mt-4">
+            <div class="top-nav mb-3">
+                <h4>Hello, {{ user.name }}</h4>
+                <a href="/logout" class="btn btn-info float-right">Logout</a>
+            </div>
+            <br>
+            <h2 class="text-center">Your Trip Schedules</h2>
+            <hr>
+            <table class="table table-dark text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Travel Start Date</th>
+                            <th scope="col">Travel Start End</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for join in joins %}
+                        <tr>
+                            <td><a href="/showTrip/{{join.trip.id}}">{{ join.trip.destination  }}</a></td>
+                            <td>{{ join.trip.travelStart }}</td>
+                            <td>{{ join.trip.travelEnd }}</td>
+                            <td>{{ join.trip.description }}</td>
+                            {% if request.session.id == join.trip.added_by.id %}
+                            <td> <a class="btn btn-danger" href="/deleteTrip/{{join.trip.id}}">Delete Your Trip</a></td> 
+                            {% else %}
+                            <td> <a class="btn btn-danger" href="/leaveFriendsTrip/{{join.trip.id}}">Leave This Trip</a></td> 
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+    
+                  <h2 class="text-center">Other User's Travel Plans</h2>
+                  <hr>
+                  <table class="table table-dark text-center">
+                          <thead>
+                            <tr>
+                                <th scope="col">Name:</th>
+                                <th scope="col">Destination:</th>
+                                <th scope="col">Travel Start Date:</th>
+                                <th scope="col">Travel End Date:</th>
+                                <th scope="col">Do you want to Join?</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                {% for trip in notFavs %}
+                                <tr>
+                                    <td>{{ trip.added_by.name }}</td>
+                                    <td>{{ trip.destination }}</td>
+                                    <td>{{ trip.travelStart }}</td>
+                                    <td>{{ trip.travelEnd }}</td>
+                                    <td> <a class="btn btn-light" href="/joinTrip/{{trip.id}}">Join</a></td> 
+                                </tr>
+                                {% endfor %}
+                          </tbody>
+                    </table>
+                        <a href="/newtrip" class="btn btn-info float-right">Add New Trip</a>
+                    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+</html>

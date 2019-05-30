@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Trip</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link href="{% static 'login/css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+    <div class="container text-center mt-3">
+        <div class="col text-right mt-4">
+            <a class="btn btn-info" href="/dashboard">Home</a>
+            <a class="btn btn-info" href="/newtrip">Add A Trip</a>
+            <a class="btn btn-danger" href="/logout">Logout</a><br>
+        </div>
+        <br>
+        <h1>Destination: {{ trip.destination }}</h1>
+        <hr>
+        <h3>Description: <strong>{{ trip.description }}</strong></h3>
+        <h3>Travel Date Start: <strong>{{ trip.travelStart }}</strong></h3>
+        <h3>Travel Date End: <strong>{{ trip.travelEnd }}</strong></h3>
+        <br>
+        <h1>Users joining you on this Trip:</h1>
+        <hr>
+            {% for join in users_who_fav_trip %}
+                <h3>{{ join.user.name }}</h3>
+            {% endfor %}
+    </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
